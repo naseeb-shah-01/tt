@@ -19,18 +19,22 @@ export default function TalentThreadLanding() {
   const [form, setForm] = useState({ name: "", email: "", portfolio: "", skills: "" })
   const [status, setStatus] = useState(null)
 
-  async function submitWaitlist(e) {
+  async function submitWaitlist(e:any) {
     e.preventDefault()
     setStatus("submitting")
     try {
       // TODO: Replace /api/waitlist with your real endpoint (Netlify / Vercel / Zapier webhook / Notion)
-      const res = await fetch("/api/waitlist", {
+      fetch("https://script.google.com/macros/s/AKfycbzHDW9nLhLKs9CIL0ce3HskZIR2lsBMoY-rT4HOGlPVprEB9Lbw9upwzci16H_CvPw/exec", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(form)
       })
-
-      if (!res.ok) throw new Error("Network response was not ok")
+        .then(res => res.json())
+        .then(data => console.log(data));
+      
+      
 
       setStatus("success")
       setForm({ name: "", email: "", portfolio: "", skills: "" })
