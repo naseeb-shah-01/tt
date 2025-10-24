@@ -1,19 +1,22 @@
-import { NextResponse } from "next/server"
+import type { NextApiRequest, NextApiResponse } from "next";
+import axios from "axios";
 
-export async function POST(request: Request) {
-  try {
-    const body = await request.json()
-    // Basic validation
-    if (!body?.name || !body?.email) {
-      return NextResponse.json({ ok: false, error: "Missing name or email" }, { status: 400 })
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === "POST") {
+    try {
+      const googleScriptURL =
+        "https://script.google.com/macros/s/AKfycbx12345abcde/exec";
+
+      const response = await axios.post(googleScriptURL, req.body, {
+        headers: { "Content-Type": "application/json" },
+      });
+
+      res.status(200).json(response.data);
+    } catch (error: any) {
+      console.error("Proxy error:", error);
+      res.status(500).json({ error: "Google Script request failed" });
     }
-
-    // For now, just log the payload. Replace with DB or integration as needed.
-    console.log("[v0] waitlist submission:", body)
-
-    return NextResponse.json({ ok: true })
-  } catch (err) {
-    console.error("[v0] waitlist error:", err)
-    return NextResponse.json({ ok: false, error: "Invalid request" }, { status: 400 })
+  } else {
+    res.status(405).json({ error: "Method Not Allowed" });
   }
 }
