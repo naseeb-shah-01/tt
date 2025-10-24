@@ -1,6 +1,8 @@
 "use client"
 import { useState } from "react"
 
+import axios from "axios";
+
 /**
  * Talent Thread — Polished Landing Page
  * Single-file React component (TailwindCSS)
@@ -18,8 +20,6 @@ import { useState } from "react"
 export default function TalentThreadLanding() {
   const [form, setForm] = useState({ name: "", email: "", portfolio: "", skills: "" })
   const [status, setStatus] = useState(null)
-
-import axios from "axios";
 
 async function submitWaitlist(e: any) {
   e.preventDefault();
