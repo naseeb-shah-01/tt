@@ -24,7 +24,7 @@ export default function TalentThreadLanding() {
     setStatus("submitting")
     try {
       // TODO: Replace /api/waitlist with your real endpoint (Netlify / Vercel / Zapier webhook / Notion)
-      fetch("https://script.google.com/macros/s/AKfycbzHDW9nLhLKs9CIL0ce3HskZIR2lsBMoY-rT4HOGlPVprEB9Lbw9upwzci16H_CvPw/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbxf5NI90DZGIAcujiLseps-MVpblxvLObTZYHM949cYvlF98AdC8HkMmFZoWTrd8vE/exec", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
