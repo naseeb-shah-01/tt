@@ -19,30 +19,33 @@ export default function TalentThreadLanding() {
   const [form, setForm] = useState({ name: "", email: "", portfolio: "", skills: "" })
   const [status, setStatus] = useState(null)
 
-  async function submitWaitlist(e:any) {
-    e.preventDefault()
-    setStatus("submitting")
-    try {
-      // TODO: Replace /api/waitlist with your real endpoint (Netlify / Vercel / Zapier webhook / Notion)
-      fetch("https://script.google.com/macros/s/AKfycbxf5NI90DZGIAcujiLseps-MVpblxvLObTZYHM949cYvlF98AdC8HkMmFZoWTrd8vE/exec", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(form)
-      })
-        .then(res => res.json())
-        .then(data => console.log(data));
-      
-      
+import axios from "axios";
 
-      setStatus("success")
-      setForm({ name: "", email: "", portfolio: "", skills: "" })
-    } catch (err) {
-      console.error(err)
-      setStatus("error")
-    }
+async function submitWaitlist(e: any) {
+  e.preventDefault();
+  setStatus("submitting");
+
+  try {
+    const response = await axios.post(
+      "https://script.google.com/macros/s/AKfycbxf5NI90DZGIAcujiLseps-MVpblxvLObTZYHM949cYvlF98AdC8HkMmFZoWTrd8vE/exec",
+      form, // automatically JSON.stringify handled by axios
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log("Response:", response.data);
+
+    setStatus("success");
+    setForm({ name: "", email: "", portfolio: "", skills: "" });
+  } catch (error: any) {
+    console.error("Error submitting form:", error);
+    setStatus("error");
   }
+}
+
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-neutral-900 via-slate-900 to-black text-slate-100 antialiased">
