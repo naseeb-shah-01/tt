@@ -26,15 +26,9 @@ async function submitWaitlist(e: any) {
   setStatus("submitting");
 
   try {
-    const response = await axios.post(
-      "https://script.google.com/macros/s/AKfycbxf5NI90DZGIAcujiLseps-MVpblxvLObTZYHM949cYvlF98AdC8HkMmFZoWTrd8vE/exec",
-      form, // automatically JSON.stringify handled by axios
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    
+    await axios.post("/api/waitlist", form);
+
 
     console.log("Response:", response.data);
 
